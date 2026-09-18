@@ -75,6 +75,7 @@ h1,h2,h3,h4{font-family:var(--font-head);line-height:1.15;letter-spacing:-0.01em
 .section-sub.light{color:#cfd8d6;}
 
 .section{padding:88px 0;}
+#products,#why,#how,#calculator,#testimonials,#contact{scroll-margin-top:88px;}
 .section-alt{background:var(--bg-alt);}
 .section-dark{background:var(--accent);color:#fff;padding:96px 0;}
 

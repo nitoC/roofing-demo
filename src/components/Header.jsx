@@ -15,6 +15,19 @@ const LINKS = [
 export default function Header() {
   const [open, setOpen] = useState(false);
 
+  // Closing the mobile menu collapses its height with an animation. If we
+  // let the browser's native anchor jump fire at the same time, it scrolls
+  // to the target's position while the menu is still open (tall), then the
+  // collapse shifts everything up afterward and cancels the scroll out.
+  // So: intercept the click, close the menu, then scroll once it's closed.
+  function goToSection(e, href) {
+    e.preventDefault();
+    setOpen(false);
+    window.setTimeout(() => {
+      document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 280);
+  }
+
   return (
     <header className="header">
       <div className="container header-inner">
@@ -46,13 +59,13 @@ export default function Header() {
             transition={{ duration: 0.25, ease: "easeInOut" }}
           >
             {LINKS.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>
+              <a key={l.href} href={l.href} onClick={(e) => goToSection(e, l.href)}>{l.label}</a>
             ))}
             <div className="mobile-nav-actions">
-              <a href="#products" className="btn btn-outline btn-block" onClick={() => setOpen(false)}>
+              <a href="#products" className="btn btn-outline btn-block" onClick={(e) => goToSection(e, "#products")}>
                 Shop sheets
               </a>
-              <a href="#contact" className="btn btn-primary btn-block" onClick={() => setOpen(false)}>
+              <a href="#contact" className="btn btn-primary btn-block" onClick={(e) => goToSection(e, "#contact")}>
                 Get a quote
               </a>
               <a href="tel:08007663669" className="mobile-nav-phone" onClick={() => setOpen(false)}>
